@@ -1,0 +1,128 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>ldmx-sw PR #2157 validation: eat_signal</title><style>:root{--bg:#fafafa;--fg:#1d1d1f;--mute:#6b6b70;--card:#fff;--line:#e2e2e6;
+--bad:#c62828;--warn:#b26a00;--good:#2e7d32;--acc:#1f5fbf}
+@media (prefers-color-scheme:dark){:root{--bg:#141416;--fg:#e8e8ea;--mute:#9a9aa0;
+--card:#1e1e21;--line:#333338;--bad:#ef6b6b;--warn:#e0a040;--good:#6cc070;--acc:#6ea2f5}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,sans-serif}
+header{padding:16px 24px;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:20px}
+header .meta{color:var(--mute);font-size:13px}
+a{color:var(--acc)}
+main{padding:16px 24px}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:600}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.fail,.missing{color:var(--bad)}.new{color:var(--warn)}.pass{color:var(--good)}
+.msgs{margin:0;padding-left:18px;color:var(--mute);font-size:12px}
+.wrap{overflow-x:auto}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:20px}
+@media (max-width:800px){.layout{grid-template-columns:1fr}}
+aside{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto}
+aside label{display:block;margin:10px 0 4px;color:var(--mute);font-size:12px}
+aside input,aside select{width:100%;padding:5px;background:var(--card);color:var(--fg);
+border:1px solid var(--line);border-radius:4px}
+.folders div{display:flex;justify-content:space-between;padding:2px 4px;cursor:pointer;
+border-radius:3px;font-size:12px}
+.folders div:hover,.folders div.on{background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px}
+.card img{width:100%;display:block;background:#fff;cursor:zoom-in}
+.card .k{font-family:ui-monospace,monospace;font-size:12px;word-break:break-all}
+.card .s{color:var(--mute);font-size:12px;font-variant-numeric:tabular-nums}
+.noimg{padding:30px;text-align:center;color:var(--mute)}
+#count{color:var(--mute);margin-bottom:10px}
+#more{margin:16px auto;display:block;padding:6px 14px}
+</style></head><body><header><h1>ldmx-sw PR #2157 validation: eat_signal</h1><div class='meta'><a href='https://github.com/LDMX-Software/ldmx-sw/actions/runs/35880126751'>workflow run</a> (attempt 1, issue_comment)</div></header><main>
+<p><a href="../index.html">&larr; all samples</a> &middot;
+<span class="fail">0 fail</span> &middot;
+<span class="missing">0 missing</span> &middot;
+<span class="new">0 new</span> &middot;
+<span class="pass">86 pass</span></p>
+<ul class="msgs"><li>Timing anomaly for eat_signal: new=1367s vs gold=1558s (-12%, tolerance 10%)</li><li>Log message counts (gold/new): fatal=0/0 error=0/0 warn=1/1 info=0/0 debug=10000/10000 trace=0/0</li><li>Timing for eat_signal: gold=1558s, new=1367s</li></ul>
+<div class="layout"><aside>
+<label>Status</label><select id="status">
+<option value="fail">fail</option><option value="missing">missing in new</option>
+<option value="new">new (not in gold)</option><option value="pass">pass</option>
+<option value="all">all</option></select>
+<label>Sort</label><select id="sort">
+<option value="dist">KS distance D (worst first)</option>
+<option value="sig">significance D&middot;sqrt(n_eff)</option>
+<option value="prob">KS probability p (worst first)</option>
+<option value="name">name</option></select>
+<label>Search</label><input id="q" type="search" placeholder="histogram name">
+<label>Min D: <span id="dminv">0.00</span></label>
+<input id="dmin" type="range" min="0" max="1" step="0.01" value="0">
+<label>Folders (non-pass / total)</label><div class="folders" id="folders"></div>
+</aside><section><div id="count"></div><div class="grid" id="grid"></div>
+<button id="more">show more</button></section></div>
+<script>const DATA = {"rows": [{"key": "DarkBremDQM/aprime_daughter_element", "name": "DarkBremDQM_aprime_daughter_element", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/aprime_daughter_material", "name": "DarkBremDQM_aprime_daughter_material", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/aprime_daughter_pdgid", "name": "DarkBremDQM_aprime_daughter_pdgid", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/aprime_energy", "name": "DarkBremDQM_aprime_energy", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/aprime_pt", "name": "DarkBremDQM_aprime_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/aprime_theta", "name": "DarkBremDQM_aprime_theta", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/dark_brem_element", "name": "DarkBremDQM_dark_brem_element", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/dark_brem_material", "name": "DarkBremDQM_dark_brem_material", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/dark_brem_z", "name": "DarkBremDQM_dark_brem_z", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/incident_energy", "name": "DarkBremDQM_incident_energy", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/incident_pt", "name": "DarkBremDQM_incident_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/recoil_brem_daughter_num", "name": "DarkBremDQM_recoil_brem_daughter_num", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/recoil_energy", "name": "DarkBremDQM_recoil_energy", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/recoil_pt", "name": "DarkBremDQM_recoil_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "DarkBremDQM/recoil_theta", "name": "DarkBremDQM_recoil_theta", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPElectronKinematics/energy", "name": "EcalSPElectronKinematics_energy", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPElectronKinematics/pt", "name": "EcalSPElectronKinematics_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPElectronKinematics/px", "name": "EcalSPElectronKinematics_px", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPElectronKinematics/py", "name": "EcalSPElectronKinematics_py", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPElectronKinematics/x", "name": "EcalSPElectronKinematics_x", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPElectronKinematics/y", "name": "EcalSPElectronKinematics_y", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/has_match", "name": "EcalSPTrackCompare_has_match", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/n_tracks", "name": "EcalSPTrackCompare_n_tracks", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/sp_p", "name": "EcalSPTrackCompare_sp_p", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/sp_phi", "name": "EcalSPTrackCompare_sp_phi", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/sp_pt", "name": "EcalSPTrackCompare_sp_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/sp_theta", "name": "EcalSPTrackCompare_sp_theta", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/sp_x", "name": "EcalSPTrackCompare_sp_x", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/sp_y", "name": "EcalSPTrackCompare_sp_y", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalTrackAnalyzer/n_tracks", "name": "EcalTrackAnalyzer_n_tracks", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "HcalVetoResults/max_pe", "name": "HcalVetoResults_max_pe", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "HcalVetoResults/max_pos_z", "name": "HcalVetoResults_max_pos_z", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "HcalVetoResults/max_section", "name": "HcalVetoResults_max_section", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "HcalVetoResults/num_valid_hits", "name": "HcalVetoResults_num_valid_hits", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "HcalVetoResults/total_pe", "name": "HcalVetoResults_total_pe", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "HcalVetoResults/veto_pass", "name": "HcalVetoResults_veto_pass", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 10000.0, "test_entries": 10000.0}, {"key": "EcalSPTrackCompare/delta_angle", "name": "EcalSPTrackCompare_delta_angle", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_p", "name": "EcalSPTrackCompare_delta_p", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_p_frac", "name": "EcalSPTrackCompare_delta_p_frac", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_phi", "name": "EcalSPTrackCompare_delta_phi", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_pt", "name": "EcalSPTrackCompare_delta_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_r", "name": "EcalSPTrackCompare_delta_r", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_theta", "name": "EcalSPTrackCompare_delta_theta", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_x", "name": "EcalSPTrackCompare_delta_x", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/delta_y", "name": "EcalSPTrackCompare_delta_y", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/sp_p_vs_trk_p", "name": "EcalSPTrackCompare_sp_p_vs_trk_p", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/sp_theta_vs_trk_theta", "name": "EcalSPTrackCompare_sp_theta_vs_trk_theta", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/sp_x_vs_trk_x", "name": "EcalSPTrackCompare_sp_x_vs_trk_x", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/sp_y_vs_trk_y", "name": "EcalSPTrackCompare_sp_y_vs_trk_y", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/trk_p", "name": "EcalSPTrackCompare_trk_p", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/trk_phi", "name": "EcalSPTrackCompare_trk_phi", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/trk_pt", "name": "EcalSPTrackCompare_trk_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/trk_theta", "name": "EcalSPTrackCompare_trk_theta", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/trk_x", "name": "EcalSPTrackCompare_trk_x", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalSPTrackCompare/trk_y", "name": "EcalSPTrackCompare_trk_y", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_charge", "name": "EcalTrackAnalyzer_track_charge", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_chi2", "name": "EcalTrackAnalyzer_track_chi2", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_chi2_vs_nhits", "name": "EcalTrackAnalyzer_track_chi2_vs_nhits", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_d0", "name": "EcalTrackAnalyzer_track_d0", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_ndf", "name": "EcalTrackAnalyzer_track_ndf", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_nhits", "name": "EcalTrackAnalyzer_track_nhits", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_nhits_vs_chi2", "name": "EcalTrackAnalyzer_track_nhits_vs_chi2", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_nhits_vs_chi2_ndf", "name": "EcalTrackAnalyzer_track_nhits_vs_chi2_ndf", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_p", "name": "EcalTrackAnalyzer_track_p", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_p_vs_chi2", "name": "EcalTrackAnalyzer_track_p_vs_chi2", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_p_vs_nhits", "name": "EcalTrackAnalyzer_track_p_vs_nhits", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_p_vs_theta", "name": "EcalTrackAnalyzer_track_p_vs_theta", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_phi", "name": "EcalTrackAnalyzer_track_phi", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_pt", "name": "EcalTrackAnalyzer_track_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_px", "name": "EcalTrackAnalyzer_track_px", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_py", "name": "EcalTrackAnalyzer_track_py", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_pz", "name": "EcalTrackAnalyzer_track_pz", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_qop", "name": "EcalTrackAnalyzer_track_qop", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_theta", "name": "EcalTrackAnalyzer_track_theta", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_x", "name": "EcalTrackAnalyzer_track_x", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_xy", "name": "EcalTrackAnalyzer_track_xy", "class": "TH2F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_y", "name": "EcalTrackAnalyzer_track_y", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_z0", "name": "EcalTrackAnalyzer_track_z0", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9923.0, "test_entries": 9923.0}, {"key": "EcalTrackAnalyzer/track_chi2_ndf", "name": "EcalTrackAnalyzer_track_chi2_ndf", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 8407.0, "test_entries": 8407.0}, {"key": "DarkBremDQM/aprime_daughter_energy", "name": "DarkBremDQM_aprime_daughter_energy", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 0.0, "test_entries": 0.0}, {"key": "DarkBremDQM/aprime_daughter_pt", "name": "DarkBremDQM_aprime_daughter_pt", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 0.0, "test_entries": 0.0}, {"key": "DarkBremDQM/aprime_daughter_start_z", "name": "DarkBremDQM_aprime_daughter_start_z", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 0.0, "test_entries": 0.0}, {"key": "DarkBremDQM/recoil_brem_daughter_energy", "name": "DarkBremDQM_recoil_brem_daughter_energy", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 0.0, "test_entries": 0.0}, {"key": "DarkBremDQM/recoil_brem_daughter_energy_ratio", "name": "DarkBremDQM_recoil_brem_daughter_energy_ratio", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 0.0, "test_entries": 0.0}, {"key": "EcalTrackAnalyzer/track_p_multitracks", "name": "EcalTrackAnalyzer_track_p_multitracks", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 0.0, "test_entries": 0.0}, {"key": "EcalTrackAnalyzer/track_separation", "name": "EcalTrackAnalyzer_track_separation", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 0.0, "test_entries": 0.0}]};const rows = DATA.rows;
+const folderOf = r => r.key.includes('/') ? r.key.split('/')[0] : '(top)';
+let folder = null, shown = 0;
+const PAGE = 120;
+const $ = id => document.getElementById(id);
+function fmt(x){ return x === undefined ? '-' : (x === 0 ? '0' : x < 1e-3 ? x.toExponential(1) : x.toFixed(3)); }
+const n = r => (r.gold_entries||0) + (r.test_entries||0);
+function sig(r){
+  const a = r.gold_entries||0, b = r.test_entries||0;
+  if (!a && !b) return 0;
+  return (r.ks_dist||0) * Math.sqrt(a && b ? a*b/(a+b) : Math.max(a,b));
+}
+function filtered(){
+  const st = $('status').value, q = $('q').value.toLowerCase(), dmin = +$('dmin').value;
+  let out = rows.filter(r => (st === 'all' || r.status === st)
+    && (!q || r.key.toLowerCase().includes(q))
+    && (!folder || folderOf(r) === folder)
+    && (r.ks_dist === undefined || r.ks_dist >= dmin));
+  const by = $('sort').value;
+  const rank = {missing:0, fail:1, new:2, pass:3};
+  const cmp = {
+    dist: (a,b) => rank[a.status]-rank[b.status] || (b.ks_dist??0)-(a.ks_dist??0) || n(b)-n(a),
+    sig: (a,b) => rank[a.status]-rank[b.status] || sig(b)-sig(a),
+    prob: (a,b) => rank[a.status]-rank[b.status] || (a.ks_prob??1)-(b.ks_prob??1) || (b.ks_dist??0)-(a.ks_dist??0),
+    name: (a,b) => a.key.localeCompare(b.key)
+  }[by];
+  return out.sort(cmp);
+}
+function card(r){
+  const d = document.createElement('div'); d.className = 'card';
+  const img = r.img ? `<a href="${r.img}" target="_blank"><img loading="lazy" src="${r.img}" alt=""></a>`
+                    : `<div class="noimg">${r.status === 'pass' ? 'passing plot not published' : 'no plot'}</div>`;
+  d.innerHTML = img + `<div class="k"></div><div class="s"><span class="${r.status}">${r.status}</span>`
+    + (r.ks_dist !== undefined ? ` &middot; D=${fmt(r.ks_dist)} &middot; p=${fmt(r.ks_prob)}` : '')
+    + (r.gold_entries !== undefined ? ` &middot; N gold/new=${r.gold_entries}/${r.test_entries}` : '') + `</div>`;
+  d.querySelector('.k').textContent = r.key;
+  return d;
+}
+function render(reset){
+  if (reset) { shown = 0; $('grid').innerHTML = ''; }
+  const list = filtered();
+  $('count').textContent = `${list.length} histograms`;
+  const frag = document.createDocumentFragment();
+  list.slice(shown, shown + PAGE).forEach(r => frag.appendChild(card(r)));
+  $('grid').appendChild(frag);
+  shown = Math.min(list.length, shown + PAGE);
+  $('more').hidden = shown >= list.length;
+}
+function folders(){
+  const c = {};
+  rows.forEach(r => { const f = folderOf(r); c[f] = c[f] || [0,0]; c[f][1]++; if (r.status !== 'pass') c[f][0]++; });
+  const box = $('folders'); box.innerHTML = '';
+  Object.entries(c).sort((a,b) => b[1][0]-a[1][0] || a[0].localeCompare(b[0])).forEach(([f,[n,t]]) => {
+    const d = document.createElement('div');
+    d.innerHTML = `<span></span><span class="${n ? 'fail' : 'pass'}">${n}/${t}</span>`;
+    d.firstChild.textContent = f;
+    d.onclick = () => { folder = folder === f ? null : f;
+      [...box.children].forEach(x => x.classList.toggle('on', x === d && folder)); render(true); };
+    box.appendChild(d);
+  });
+}
+['status','sort','q','dmin'].forEach(id => $(id).addEventListener('input', () => {
+  if (id === 'dmin') $('dminv').textContent = (+$('dmin').value).toFixed(2);
+  render(true);
+}));
+$('more').onclick = () => render(false);
+if (!rows.some(r => r.status !== 'pass')) $('status').value = 'all';
+folders(); render(true);
+</script>
+</main></body></html>
