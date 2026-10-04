@@ -1,0 +1,150 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>ldmx-sw PR #2178 validation: esa_vst</title><style>:root{--bg:#fafafa;--fg:#1d1d1f;--mute:#6b6b70;--card:#fff;--line:#e2e2e6;
+--bad:#c62828;--warn:#b26a00;--good:#2e7d32;--acc:#1f5fbf}
+@media (prefers-color-scheme:dark){:root{--bg:#141416;--fg:#e8e8ea;--mute:#9a9aa0;
+--card:#1e1e21;--line:#333338;--bad:#ef6b6b;--warn:#e0a040;--good:#6cc070;--acc:#6ea2f5}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,sans-serif}
+header{padding:16px 24px;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:20px}
+header .meta{color:var(--mute);font-size:13px}
+a{color:var(--acc)}
+main{padding:16px 24px}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:600}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.fail,.missing{color:var(--bad)}.new{color:var(--warn)}.pass{color:var(--good)}
+.msgs{margin:0;padding-left:18px;color:var(--mute);font-size:12px}
+.wrap{overflow-x:auto}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:20px}
+@media (max-width:800px){.layout{grid-template-columns:1fr}}
+aside{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto}
+aside label{display:block;margin:10px 0 4px;color:var(--mute);font-size:12px}
+aside input,aside select{width:100%;padding:5px;background:var(--card);color:var(--fg);
+border:1px solid var(--line);border-radius:4px}
+.folders div{display:flex;justify-content:space-between;padding:2px 4px;cursor:pointer;
+border-radius:3px;font-size:12px}
+.folders div:hover,.folders div.on{background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px}
+.card img{width:100%;display:block;background:#fff;cursor:zoom-in}
+.card .k{font-family:ui-monospace,monospace;font-size:12px;word-break:break-all}
+.card .s{color:var(--mute);font-size:12px;font-variant-numeric:tabular-nums}
+.noimg{padding:30px;text-align:center;color:var(--mute)}
+#count{color:var(--mute);margin-bottom:10px}
+#more{margin:16px auto;display:block;padding:6px 14px}
+#zoom{position:fixed;inset:0;z-index:10;background:rgba(0,0,0,.75);display:flex;
+align-items:center;justify-content:center;cursor:zoom-out}
+#zoom[hidden]{display:none}
+#zoom figure{margin:0;cursor:default;max-width:95vw}
+#zoom img{display:block;max-width:95vw;max-height:88vh;background:#fff;border-radius:4px}
+#zoom figcaption{color:#eee;font-family:ui-monospace,monospace;font-size:13px;
+margin-top:6px;word-break:break-all}
+</style></head><body><header><h1>ldmx-sw PR #2178 validation: esa_vst</h1><div class='meta'><a href='https://github.com/LDMX-Software/ldmx-sw/actions/runs/37164070081'>workflow run</a> (attempt 1, issue_comment)</div></header><main>
+<p><a href="../index.html">&larr; all samples</a> &middot;
+<span class="fail">0 fail</span> &middot;
+<span class="missing">0 missing</span> &middot;
+<span class="new">0 new</span> &middot;
+<span class="pass">28 pass</span></p>
+<ul class="msgs"><li>Timing anomaly for esa_vst: new=246s vs gold=309s (-20%, tolerance 10%)</li><li>Log message counts (gold/new): fatal=0/0 error=0/0 warn=1/1 info=8/8 debug=0/0 trace=0/0</li><li>Timing for esa_vst: gold=309s, new=246s</li></ul>
+<div class="layout"><aside>
+<label>Status</label><select id="status">
+<option value="fail">fail</option><option value="missing">missing in new</option>
+<option value="new">new (not in gold)</option><option value="pass">pass</option>
+<option value="all">all</option></select>
+<label>Sort</label><select id="sort">
+<option value="sig">significance D&middot;sqrt(n_eff)</option>
+<option value="dist">KS distance D (worst first)</option>
+<option value="prob">KS probability p (worst first)</option>
+<option value="name">name</option></select>
+<label>Search</label><input id="q" type="search" placeholder="histogram name">
+<label>Min D: <span id="dminv">0.00</span></label>
+<input id="dmin" type="range" min="0" max="1" step="0.01" value="0">
+<label>Folders (non-pass / total)</label><div class="folders" id="folders"></div>
+</aside><section><div id="count"></div><div class="grid" id="grid"></div>
+<button id="more">show more</button></section></div>
+<script>const DATA = {"rows": [{"key": "RawSiStripDQM/raw_read_error", "name": "RawSiStripDQM_raw_read_error", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 247680000.0, "test_entries": 247680000.0}, {"key": "RawSiStripDQM/raw_adc_h0", "name": "RawSiStripDQM_raw_adc_h0", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/raw_adc_h1", "name": "RawSiStripDQM_raw_adc_h1", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/raw_adc_h2", "name": "RawSiStripDQM_raw_adc_h2", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/raw_adc_h3", "name": "RawSiStripDQM_raw_adc_h3", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/subtracted_adc_h0", "name": "RawSiStripDQM_subtracted_adc_h0", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/subtracted_adc_h1", "name": "RawSiStripDQM_subtracted_adc_h1", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/subtracted_adc_h2", "name": "RawSiStripDQM_subtracted_adc_h2", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/subtracted_adc_h3", "name": "RawSiStripDQM_subtracted_adc_h3", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 185760000.0, "test_entries": 185760000.0}, {"key": "RawSiStripDQM/fit_chi2_ndf", "name": "RawSiStripDQM_fit_chi2_ndf", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 307003.0, "test_entries": 307003.0}, {"key": "RawSiStripDQM/fit_t0", "name": "RawSiStripDQM_fit_t0", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 307003.0, "test_entries": 307003.0}, {"key": "RawSiStripDQM/waveform_n_triggers", "name": "RawSiStripDQM_waveform_n_triggers", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 307003.0, "test_entries": 307003.0}, {"key": "RawSiStripDQM/waveform_peak_trigger", "name": "RawSiStripDQM_waveform_peak_trigger", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 307003.0, "test_entries": 307003.0}, {"key": "RawSiStripDQM/fit_amplitude_l3101", "name": "RawSiStripDQM_fit_amplitude_l3101", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 77976.0, "test_entries": 77976.0}, {"key": "RawSiStripDQM/waveform_pchannel_h1", "name": "RawSiStripDQM_waveform_pchannel_h1", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 77976.0, "test_entries": 77976.0}, {"key": "RawSiStripDQM/waveform_peak_h1", "name": "RawSiStripDQM_waveform_peak_h1", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 77976.0, "test_entries": 77976.0}, {"key": "RawSiStripDQM/fit_amplitude_l3100", "name": "RawSiStripDQM_fit_amplitude_l3100", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 77473.0, "test_entries": 77473.0}, {"key": "RawSiStripDQM/waveform_pchannel_h0", "name": "RawSiStripDQM_waveform_pchannel_h0", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 77473.0, "test_entries": 77473.0}, {"key": "RawSiStripDQM/waveform_peak_h0", "name": "RawSiStripDQM_waveform_peak_h0", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 77473.0, "test_entries": 77473.0}, {"key": "RawSiStripDQM/fit_amplitude_l3201", "name": "RawSiStripDQM_fit_amplitude_l3201", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 76347.0, "test_entries": 76347.0}, {"key": "RawSiStripDQM/waveform_pchannel_h2", "name": "RawSiStripDQM_waveform_pchannel_h2", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 76347.0, "test_entries": 76347.0}, {"key": "RawSiStripDQM/waveform_peak_h2", "name": "RawSiStripDQM_waveform_peak_h2", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 76347.0, "test_entries": 76347.0}, {"key": "RawSiStripDQM/fit_amplitude_l3200", "name": "RawSiStripDQM_fit_amplitude_l3200", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 75207.0, "test_entries": 75207.0}, {"key": "RawSiStripDQM/waveform_pchannel_h3", "name": "RawSiStripDQM_waveform_pchannel_h3", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 75207.0, "test_entries": 75207.0}, {"key": "RawSiStripDQM/waveform_peak_h3", "name": "RawSiStripDQM_waveform_peak_h3", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 75207.0, "test_entries": 75207.0}, {"key": "RawSiStripDQM/n_fitted_hits", "name": "RawSiStripDQM_n_fitted_hits", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9600.0, "test_entries": 9600.0}, {"key": "RawSiStripDQM/n_raw_hits", "name": "RawSiStripDQM_n_raw_hits", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9600.0, "test_entries": 9600.0}, {"key": "RawSiStripDQM/n_waveforms", "name": "RawSiStripDQM_n_waveforms", "class": "TH1F", "status": "pass", "ks_prob": 1.0, "ks_dist": 0.0, "gold_entries": 9600.0, "test_entries": 9600.0}]};const rows = DATA.rows;
+const folderOf = r => r.key.includes('/') ? r.key.split('/')[0] : '(top)';
+let folder = null, shown = 0;
+const PAGE = 120;
+const $ = id => document.getElementById(id);
+function fmt(x){ return x === undefined ? '-' : (x === 0 ? '0' : x < 1e-3 ? x.toExponential(1) : x.toFixed(3)); }
+const n = r => (r.gold_entries||0) + (r.test_entries||0);
+function sig(r){
+  const a = r.gold_entries||0, b = r.test_entries||0;
+  if (!a && !b) return 0;
+  return (r.ks_dist||0) * Math.sqrt(a && b ? a*b/(a+b) : Math.max(a,b));
+}
+function filtered(){
+  const st = $('status').value, q = $('q').value.toLowerCase(), dmin = +$('dmin').value;
+  let out = rows.filter(r => (st === 'all' || r.status === st)
+    && (!q || r.key.toLowerCase().includes(q))
+    && (!folder || folderOf(r) === folder)
+    && (r.ks_dist === undefined || r.ks_dist >= dmin));
+  const by = $('sort').value;
+  const rank = {missing:0, fail:1, new:2, pass:3};
+  const cmp = {
+    dist: (a,b) => rank[a.status]-rank[b.status] || (b.ks_dist??0)-(a.ks_dist??0) || n(b)-n(a),
+    sig: (a,b) => rank[a.status]-rank[b.status] || sig(b)-sig(a),
+    prob: (a,b) => rank[a.status]-rank[b.status] || (a.ks_prob??1)-(b.ks_prob??1) || (b.ks_dist??0)-(a.ks_dist??0),
+    name: (a,b) => a.key.localeCompare(b.key)
+  }[by];
+  return out.sort(cmp);
+}
+function card(r){
+  const d = document.createElement('div'); d.className = 'card';
+  const img = r.img ? `<a href="${r.img}" target="_blank"><img loading="lazy" src="${r.img}" alt=""></a>`
+                    : `<div class="noimg">${r.status === 'pass' ? 'passing plot not published' : 'no plot'}</div>`;
+  d.innerHTML = img + `<div class="k"></div><div class="s"><span class="${r.status}">${r.status}</span>`
+    + (r.ks_dist !== undefined ? ` &middot; D=${fmt(r.ks_dist)} &middot; p=${fmt(r.ks_prob)}` : '')
+    + (r.gold_entries !== undefined ? ` &middot; N gold/new=${r.gold_entries}/${r.test_entries}` : '') + `</div>`;
+  d.querySelector('.k').textContent = r.key;
+  return d;
+}
+function render(reset){
+  if (reset) { shown = 0; $('grid').innerHTML = ''; }
+  const list = filtered();
+  $('count').textContent = `${list.length} histograms`;
+  const frag = document.createDocumentFragment();
+  list.slice(shown, shown + PAGE).forEach(r => frag.appendChild(card(r)));
+  $('grid').appendChild(frag);
+  shown = Math.min(list.length, shown + PAGE);
+  $('more').hidden = shown >= list.length;
+}
+function folders(){
+  const c = {};
+  rows.forEach(r => { const f = folderOf(r); c[f] = c[f] || [0,0]; c[f][1]++; if (r.status !== 'pass') c[f][0]++; });
+  const box = $('folders'); box.innerHTML = '';
+  Object.entries(c).sort((a,b) => b[1][0]-a[1][0] || a[0].localeCompare(b[0])).forEach(([f,[n,t]]) => {
+    const d = document.createElement('div');
+    d.innerHTML = `<span></span><span class="${n ? 'fail' : 'pass'}">${n}/${t}</span>`;
+    d.firstChild.textContent = f;
+    d.onclick = () => { folder = folder === f ? null : f;
+      [...box.children].forEach(x => x.classList.toggle('on', x === d && folder)); render(true); };
+    box.appendChild(d);
+  });
+}
+['status','sort','q','dmin'].forEach(id => $(id).addEventListener('input', () => {
+  if (id === 'dmin') $('dminv').textContent = (+$('dmin').value).toFixed(2);
+  render(true);
+}));
+$('more').onclick = () => render(false);
+// zoom plot in place, click outside or Esc closes
+const zoom = document.createElement('div'); zoom.id = 'zoom'; zoom.hidden = true;
+zoom.innerHTML = '<figure><img alt=""><figcaption></figcaption></figure>';
+document.body.appendChild(zoom);
+const unzoom = () => { zoom.hidden = true; zoom.querySelector('img').src = ''; };
+zoom.onclick = e => { if (e.target === zoom) unzoom(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') unzoom(); });
+$('grid').addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
+  e.preventDefault();
+  zoom.querySelector('img').src = a.getAttribute('href');
+  zoom.querySelector('figcaption').textContent = a.closest('.card').querySelector('.k').textContent;
+  zoom.hidden = false;
+});
+if (!rows.some(r => r.status !== 'pass')) $('status').value = 'all';
+folders(); render(true);
+</script>
+</main></body></html>
