@@ -1,0 +1,1 @@
+{"title": "ldmx-sw #2182 Geant4 v11 validation", "meta": "ecal_pn CI config, 10k events each: gold = Geant4 10.2.3 (trunk ff8a74c01), test = Geant4 11.4.3 LDMX (LDMX-Software/geant4 16-make-v11-ldmx-friendly)", "generated": "2026-10-11 21:22", "samples": [{"name": "ecal_pn", "missing": 0, "fail": 1113, "new": 0, "pass": 1118}]}
