@@ -1,0 +1,1 @@
+{"title": "ldmx-sw #2183 Geant4 v11 validation, final setup", "meta": "ecal_pn CI config, 10k events each: gold = Geant4 10.2.3 (trunk ff8a74c01), test = Geant4 11.4.3 with the 3 Bertini fork patches and ldmx-sw#2183 (crossover, Tsai, angular emission as 11.2)", "generated": "2026-10-15 06:45", "samples": [{"name": "ecal_pn", "missing": 0, "fail": 1098, "new": 0, "pass": 1133}]}
